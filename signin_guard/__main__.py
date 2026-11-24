@@ -10,7 +10,7 @@ def main(argv=None):
     p = argparse.ArgumentParser(prog="signin_guard", description="Detect identity attacks in Entra ID sign-in logs.")
     p.add_argument("logs", help="Entra ID sign-in log export (JSON array, or {'value': [...]} from Graph)")
     p.add_argument("--html", help="write an HTML incident report")
-    p.add_argument("--wazuh", help="write JSON lines for a Wazuh agent to ingest")
+    p.add_argument("--wazuh", help="write JSON lines for a SIEM (e.g. Wazuh) to ingest")
     args = p.parse_args(argv)
 
     with open(args.logs) as f:
@@ -30,7 +30,7 @@ def main(argv=None):
         with open(args.wazuh, "w") as f:
             for a in alerts:
                 f.write(json.dumps({"signin_guard": a.to_dict()}) + "\n")
-        print(f"Wazuh feed: {args.wazuh}")
+        print(f"SIEM feed: {args.wazuh}")
     return alerts
 
 

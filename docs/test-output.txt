@@ -1,0 +1,10 @@
+test_brute_force_with_success_is_high (tests.test_detections.DetectionTests.test_brute_force_with_success_is_high) ... ok
+test_impossible_travel (tests.test_detections.DetectionTests.test_impossible_travel) ... ok
+test_mfa_fatigue_with_approval_is_critical (tests.test_detections.DetectionTests.test_mfa_fatigue_with_approval_is_critical) ... ok
+test_normal_traffic_has_no_false_positives (tests.test_detections.DetectionTests.test_normal_traffic_has_no_false_positives) ... ok
+test_password_spray (tests.test_detections.DetectionTests.test_password_spray) ... ok
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.012s
+
+OK

@@ -1,0 +1,10 @@
+[CRITICAL] MFA fatigue with approval                     omar.haddad@contoso.ca       T1621
+[HIGH    ] Impossible travel                             chen.li@contoso.ca           T1078
+[HIGH    ] Brute force followed by successful sign-in    chen.li@contoso.ca           T1110.001, T1078
+[HIGH    ] Password spray                                10 accounts                  T1110.003
+[HIGH    ] Impossible travel                             diana.roy@contoso.ca         T1078
+[HIGH    ] Impossible travel                             omar.haddad@contoso.ca       T1078
+
+6 alerts from 129 events
+HTML report: sample_data/report.html
+SIEM feed: sample_data/alerts.jsonl
