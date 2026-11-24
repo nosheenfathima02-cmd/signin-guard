@@ -1,0 +1,33 @@
+<!-- SignIn Guard rules for Wazuh. Copy into /var/ossec/etc/rules/local_rules.xml
+     and add the alerts.jsonl file as a <localfile> with <log_format>json</log_format>. -->
+<group name="signin_guard,identity,">
+  <rule id="100500" level="0">
+    <decoded_as>json</decoded_as>
+    <field name="signin_guard.rule">\.+</field>
+    <description>SignIn Guard event</description>
+  </rule>
+  <rule id="100501" level="10">
+    <if_sid>100500</if_sid>
+    <field name="signin_guard.rule">^Brute force</field>
+    <description>Brute force against $(signin_guard.user) from $(signin_guard.ip)</description>
+    <mitre><id>T1110.001</id></mitre>
+  </rule>
+  <rule id="100502" level="12">
+    <if_sid>100500</if_sid>
+    <field name="signin_guard.rule">^Password spray</field>
+    <description>Password spray from $(signin_guard.ip)</description>
+    <mitre><id>T1110.003</id></mitre>
+  </rule>
+  <rule id="100503" level="12">
+    <if_sid>100500</if_sid>
+    <field name="signin_guard.rule">^Impossible travel</field>
+    <description>Impossible travel for $(signin_guard.user)</description>
+    <mitre><id>T1078</id></mitre>
+  </rule>
+  <rule id="100504" level="14">
+    <if_sid>100500</if_sid>
+    <field name="signin_guard.rule">^MFA fatigue with approval</field>
+    <description>MFA fatigue succeeded for $(signin_guard.user): account likely compromised</description>
+    <mitre><id>T1621</id></mitre>
+  </rule>
+</group>

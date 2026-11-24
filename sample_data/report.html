@@ -1,0 +1,67 @@
+<!doctype html><html><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SignIn Guard Report</title>
+<style>
+ body{font:14px/1.5 system-ui,sans-serif;margin:0;padding:24px;background:#f6f7f9;color:#1b2430}
+ h1{margin:0 0 4px} .muted{color:#5b6675;font-size:12.5px}
+ .tiles{display:flex;gap:12px;margin:16px 0;flex-wrap:wrap}
+ .tile{background:#fff;border:1px solid #dde2e8;border-radius:8px;padding:12px 18px;min-width:110px}
+ .tile b{font-size:28px;display:block} .tile span{text-transform:uppercase;font-size:11px;letter-spacing:.06em}
+ .wrap{overflow-x:auto;background:#fff;border:1px solid #dde2e8;border-radius:8px}
+ table{border-collapse:collapse;width:100%;min-width:760px} td,th{padding:10px 12px;border-bottom:1px solid #eef1f4;vertical-align:top;text-align:left}
+ th{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#5b6675}
+ .pill{color:#fff;border-radius:99px;padding:2px 10px;font-size:12px} .play{font-size:12.5px;margin-top:4px}
+</style></head><body>
+<h1>SignIn Guard: identity threat report</h1>
+<div class="muted">129 sign-in events analysed · 6 alerts · MITRE ATT&amp;CK mapped</div>
+<div class="tiles"><div class="tile"><b style="color:#b42318">1</b><span>critical</span></div><div class="tile"><b style="color:#d9480f">5</b><span>high</span></div><div class="tile"><b style="color:#b8860b">0</b><span>medium</span></div></div>
+<div class="wrap"><table><tr><th>Severity</th><th>Detection</th><th>User</th><th>Source IP</th><th>ATT&amp;CK</th><th>First / last seen (UTC)</th></tr>
+      <tr>
+        <td><span class="pill" style="background:#b42318">critical</span></td>
+        <td><b>MFA fatigue with approval</b><div class="muted">7 MFA pushes denied in 6 min; user then approved one. Revoke sessions and reset credentials.</div>
+            <div class="play">Response: Revoke all sessions, reset password, switch the user to number-matching MFA, contact the user.</div></td>
+        <td>omar.haddad@contoso.ca</td><td><code>91.243.44.12</code></td>
+        <td><code>T1621</code></td>
+        <td class="muted">2026-10-22T11:00:00Z<br>2026-10-22T11:08:00Z</td>
+      </tr>
+      <tr>
+        <td><span class="pill" style="background:#d9480f">high</span></td>
+        <td><b>Impossible travel</b><div class="muted">Toronto to Moscow (7,485 km) in 37 min, about 12,138 km/h.</div>
+            <div class="play">Response: Check for VPN use, revoke refresh tokens, require password reset if the user did not travel.</div></td>
+        <td>chen.li@contoso.ca</td><td><code>185.220.101.44</code></td>
+        <td><code>T1078</code></td>
+        <td class="muted">2026-10-21T09:28:00Z<br>2026-10-21T10:05:00Z</td>
+      </tr>
+      <tr>
+        <td><span class="pill" style="background:#d9480f">high</span></td>
+        <td><b>Brute force followed by successful sign-in</b><div class="muted">14 failed passwords in 10 min from 185.220.101.44; then a successful sign-in. Treat account as compromised.</div>
+            <div class="play">Response: Confirm with the user, block the IP at Conditional Access, check for a later successful sign-in.</div></td>
+        <td>chen.li@contoso.ca</td><td><code>185.220.101.44</code></td>
+        <td><code>T1110.001, T1078</code></td>
+        <td class="muted">2026-10-21T10:00:00Z<br>2026-10-21T10:05:00Z</td>
+      </tr>
+      <tr>
+        <td><span class="pill" style="background:#d9480f">high</span></td>
+        <td><b>Password spray</b><div class="muted">45.153.160.2 tried 10 different accounts in 30 min.</div>
+            <div class="play">Response: Block the source IP, review every targeted account for a success, enforce MFA and smart lockout.</div></td>
+        <td>10 accounts</td><td><code>45.153.160.2</code></td>
+        <td><code>T1110.003</code></td>
+        <td class="muted">2026-10-21T13:00:00Z<br>2026-10-21T13:06:00Z</td>
+      </tr>
+      <tr>
+        <td><span class="pill" style="background:#d9480f">high</span></td>
+        <td><b>Impossible travel</b><div class="muted">Toronto to Lagos (8,926 km) in 40 min, about 13,389 km/h.</div>
+            <div class="play">Response: Check for VPN use, revoke refresh tokens, require password reset if the user did not travel.</div></td>
+        <td>diana.roy@contoso.ca</td><td><code>102.89.33.7</code></td>
+        <td><code>T1078</code></td>
+        <td class="muted">2026-10-22T09:00:00Z<br>2026-10-22T09:40:00Z</td>
+      </tr>
+      <tr>
+        <td><span class="pill" style="background:#d9480f">high</span></td>
+        <td><b>Impossible travel</b><div class="muted">Toronto to Moscow (7,485 km) in 116 min, about 3,872 km/h.</div>
+            <div class="play">Response: Check for VPN use, revoke refresh tokens, require password reset if the user did not travel.</div></td>
+        <td>omar.haddad@contoso.ca</td><td><code>91.243.44.12</code></td>
+        <td><code>T1078</code></td>
+        <td class="muted">2026-10-22T09:12:00Z<br>2026-10-22T11:08:00Z</td>
+      </tr></table></div>
+</body></html>

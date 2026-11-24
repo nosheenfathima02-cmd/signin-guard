@@ -1,0 +1,24 @@
+// SignIn Guard detections rewritten as Microsoft Sentinel / Defender KQL hunting queries.
+
+// Brute force followed by success (T1110.001, T1078)
+SigninLogs
+| where TimeGenerated > ago(1d)
+| summarize Failures = countif(ResultType == "50126"), Successes = countif(ResultType == "0"),
+            FirstSeen = min(TimeGenerated), LastSeen = max(TimeGenerated)
+            by UserPrincipalName, IPAddress, bin(TimeGenerated, 10m)
+| where Failures >= 10
+| extend Severity = iff(Successes > 0, "High", "Medium")
+
+// Password spray (T1110.003)
+SigninLogs
+| where TimeGenerated > ago(1d) and ResultType == "50126"
+| summarize TargetedUsers = dcount(UserPrincipalName), Users = make_set(UserPrincipalName, 50)
+            by IPAddress, bin(TimeGenerated, 30m)
+| where TargetedUsers >= 5
+
+// MFA fatigue (T1621)
+SigninLogs
+| where TimeGenerated > ago(1d) and ResultType == "500121"
+| summarize Denied = count(), FirstSeen = min(TimeGenerated), LastSeen = max(TimeGenerated)
+            by UserPrincipalName, IPAddress
+| where Denied >= 5 and LastSeen - FirstSeen < 15m
