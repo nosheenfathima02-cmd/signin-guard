@@ -52,20 +52,38 @@ python -m unittest -v                             # run the 5 tests
 
 To analyze real data, export sign-in logs as JSON from the Entra admin center (Monitoring → Sign-in logs → Download) and pass that file instead.
 
-## Microsoft Sentinel
+## SIEM integration
 
-[`sentinel/hunting_queries.kql`](sentinel/hunting_queries.kql) contains the brute-force, password-spray and MFA-fatigue detections as KQL queries for Microsoft Sentinel.
+- **Microsoft Sentinel:** [`sentinel/hunting_queries.kql`](sentinel/hunting_queries.kql) contains the brute-force, password-spray and MFA-fatigue detections as KQL queries.
+- **Wazuh:** [`wazuh/local_rules.xml`](wazuh/local_rules.xml) contains custom rules (IDs 100501–100504, tagged with MITRE techniques) that turn the `alerts.jsonl` feed into Wazuh alerts.
 
 ## Project layout
 
 ```
-signin_guard/detections.py       the four detection rules
-signin_guard/report.py           HTML incident report
-signin_guard/generate_sample.py  synthetic test logs with planted attacks
-signin_guard/__main__.py         command-line tool
-tests/test_detections.py         unit tests
-sentinel/hunting_queries.kql     the same detections in KQL
-docs/                            example output and screenshots
+signin-guard/
+├── signin_guard/
+│   ├── __main__.py          command-line tool
+│   ├── detections.py        the four detection rules
+│   ├── report.py            HTML incident report
+│   └── generate_sample.py   synthetic test logs with planted attacks
+├── tests/
+│   └── test_detections.py   5 unit tests
+├── sample_data/
+│   ├── signins.json         synthetic sign-in logs (129 events, test accounts only)
+│   ├── report.html          generated incident report
+│   └── alerts.jsonl         generated alerts, one JSON object per line
+├── sentinel/
+│   └── hunting_queries.kql  the same detections in KQL
+├── wazuh/
+│   └── local_rules.xml      Wazuh custom rules for the alert feed
+├── docs/
+│   ├── cli-output.png/.txt  detection run output
+│   ├── report.png           incident report screenshot
+│   ├── test-output.png/.txt unit test results
+│   ├── terminal.py          renders command output for the screenshots
+│   └── shoot.js             takes the README screenshots
+├── LICENSE
+└── README.md
 ```
 
 ## What I learned
